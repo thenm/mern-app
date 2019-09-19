@@ -8,11 +8,11 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 
 router.post('/', (req, res) => {
-	const { name, email, password } = req.body;
+	const { name, email, password,mobile,dob,address,state } = req.body;
 
 	// Fields check
 	if (!name || !email || !password) {
-		return res.bcryptstatus(400).json({ msg: 'Please enter all fields' });
+		return res.status(400).json({ msg: 'Please enter all fields' });
 	}
 
 	User.findOne({ email }).then(user => {
@@ -20,7 +20,11 @@ router.post('/', (req, res) => {
 		const newUser = new User({
 			name,
 			email,
-			password
+			password,
+			mobile,
+			dob,
+			address,
+			state
 		});
 
 		// Create salt & hash
@@ -40,7 +44,11 @@ router.post('/', (req, res) => {
 								user: {
 									id: user.id,
 									name: user.name,
-									email: user.email
+									email: user.email,
+									mobile: user.mobile,
+									dob: user.dob,
+									address: user.address,
+									state: user.state
 								}
 							});
 						}
@@ -51,19 +59,4 @@ router.post('/', (req, res) => {
 	});
 });
 
-// router.post('/', (req, res)=> {
-//     const newBook = new Book({
-//         name: req.body.name
-//     });
-//     newBook.save().then(book => res.json(book));
-// })
-
-// router.delete('/:id', (req, res)=> {
-//     Book.findById(req.params.id)
-//         .then(book => book.remove().then(()=> res.json({success: true})))
-//         .catch(err => {
-//             console.log(err);
-//             return res.status(404).json({ succes: false });
-//         });
-// })
 module.exports = router;

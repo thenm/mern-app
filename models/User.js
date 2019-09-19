@@ -12,11 +12,23 @@ const UserSchema = new Schema({
         required: true,
         unique: true
     },
+    mobile: {
+        type: Number,
+    },
+    dob: {
+        type: Date,
+    },
+    address: {
+        type: String
+    },
+    state: {
+        type: String
+    },
     password: {
         type: String,
         required: true
     },
-    reduster_date: {
+    register_date: {
         type: Date,
         default: Date.now
     }
